@@ -8,6 +8,7 @@ import Register from './Components/Register';
 import Login from './Components/Login';
 import User2 from './Components/User2';
 import User from './Components/User';
+import Update from './Components/Update';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
     <Route path='/Login' exact element={<Login/>}/>
     <Route path='/user2' exact element={<User2/>}/>
     <Route path='/user' exact element={<User/>}/>
+    <Route path='/updateuser/:id' exact element={<Update/>}/>
 
     </Routes>
     </BrowserRouter>

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Navigate} from 'react-router-dom';
+import {Navigate,Link} from 'react-router-dom';
 import axios from 'axios';
 class User2 extends Component{
 
@@ -19,13 +19,13 @@ class User2 extends Component{
             items:Response.data
         })
 
-    }).catch(function(err){
+    }).catch((err)=>{
         console.log(err);
     })
 
    }
     deleteuser=(user)=>{
-        axios.delete("http://localhost:4000/deleteuser/" ,user._id).then (function(err){
+        axios.delete("http://localhost:4000/deleteuser/"+user).then ((err)=>{
             alert("delete sucessful");
             console.log(err)
 
@@ -44,7 +44,7 @@ class User2 extends Component{
             <>
 
 {
-    this.state.items.map(function(val){
+    this.state.items.map((val)=>{
         return(
             <>
             {val.username}
@@ -52,8 +52,10 @@ class User2 extends Component{
             {val.password}
             {val.userType}
             <img src={'http://localhost:4000/'+val.image}n alt='img'></img>
-            <button> onClick={this.deleteuser.bind(this,val._id)}Delete
+            <button onClick={this.deleteuser.bind(this,val._id)}>Delete
             </button>
+
+            <Link to={'/updateuser/'+val._id}>Update</Link>
             </>
         )
 
@@ -124,4 +126,74 @@ export default User2;
 // }
 
 // export default User2;
+
+
+// import React, { Component } from 'react';
+// import { Navigate } from 'react-router-dom';
+// import axios from 'axios';
+
+// class User2 extends Component {
+//   state = {
+//     items: [],
+//     config: {
+//       headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+//     },
+//   };
+
+//   componentDidMount() {
+//     axios
+//       .get('http://localhost:4000/userall', this.state.config)
+//       .then((response) => {
+//         console.log("check", response);
+//         this.setState({
+//           items: response.data,
+//         });
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   }
+
+//   deleteuser = (userId) => {
+//     axios
+//       .delete(`http://localhost:4000/deleteuser/${userId}`, this.state.config)
+//       .then((response) => {
+//         alert('Delete successful');
+//         // Update the state after successful deletion to reflect the changes in the UI
+//         this.setState((prevState) => ({
+//           items: prevState.items.filter((item) => item._id !== userId),
+//         }));
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
+
+//   render() {
+//     if (
+//       localStorage.getItem('userType') &&
+//       localStorage.getItem('userType') !== 'Admin'
+//     ) {
+//       return <Navigate to="/login" />;
+//     }
+
+//     return (
+//       <>
+//         {this.state.items.map((val) => (
+//           <div key={val._id}>
+//             {val.username}
+//             {val.email}
+//             {val.password}
+//             {val.userType}
+//             <img src={`http://localhost:4000/${val.image}`} alt="img" />
+//             <button onClick={() => this.deleteuser(val._id)}>Delete</button>
+//           </div>
+//         ))}
+//       </>
+//     );
+//   }
+// }
+
+// export default User2;
+
 
